@@ -32,7 +32,7 @@ export default {
 
           <!-- Scan screen overlay -->
           <div class="nca-step8_scan-screen" data-sim-scan-screen>
-            <img src="images/image-76.png" loading="lazy" alt="" class="nca-step8_scan-img" />
+            <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69162fa95ba50cacbc2debea_KYC-photo.webp" loading="eager" alt="" class="nca-step8_scan-img" />
             <div class="nca-step8_scan-frame">
               <div class="nca-step8_scanner">
                 <div class="nca-step8_scan-line" data-sim-scan-line></div>
