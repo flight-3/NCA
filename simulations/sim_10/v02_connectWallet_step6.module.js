@@ -470,7 +470,7 @@ export default {
 }
 
 
-.network-name {
+.connectWalletToDex_step6_network-name {
   color: #1f1f1f;
   letter-spacing: -.04em;
   margin-top: 0;
@@ -526,7 +526,7 @@ export default {
   transform: scale(.5);
 }
 
-.connectWalletToDex_step6_check.is--checked .check-inner {
+.connectWalletToDex_step6_check.is--checked .connectWalletToDex_step6_check-inner {
   transform: scale(1.2);
 }
 
@@ -537,7 +537,7 @@ export default {
   height: 16px;
 }
 
-.connectWalletToDex_step6_add-ico, .btc-ico {
+.connectWalletToDex_step6_add-ico, .connectWalletToDex_step6_btc-ico {
   flex: none;
   width: 20px;
   height: 20px;
