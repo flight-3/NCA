@@ -120,8 +120,8 @@ export default {
 }
 
 .connectWalletToDex_step5_buttons.is--active .connectWalletToDex_step5_wallet-count,
-.buttons.is--active .wallet-address, 
-.buttons.is--active .btn-chev {
+.connectWalletToDex_step5_buttons.is--active .connectWalletToDex_step5_wallet-address, 
+.connectWalletToDex_step5_buttons.is--active .connectWalletToDex_step5_btn-chev {
   color: #fff;
 }
 
@@ -356,7 +356,7 @@ export default {
 }
 
 .connectWalletToDex_step5_wallet-label.is--1 {
-  width: 44%;
+  width: 52%;
 }
 
 .connectWalletToDex_step5_wallet-label.is--alt {
@@ -458,7 +458,6 @@ export default {
   flex: 0 auto;
   justify-content: center;
   align-items: center;
-  width: 100px;
   padding: 8px 12px;
   display: flex;
 }
