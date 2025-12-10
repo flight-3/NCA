@@ -60,7 +60,7 @@ export default {
   justify-content: flex-start;
   align-items: stretch;
   max-width: 562px;
-  padding: 40px 16px 40px 40px;
+  padding: 32px 16px 32px 32px;
   display: flex;
   overflow: hidden;
   box-shadow: 0 4px 20px #0000001a;
@@ -99,7 +99,7 @@ export default {
 }
 
 .purchaseCrypto_step3_main-container-3 {
-  grid-row-gap: 40px;
+  grid-row-gap: 32px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
@@ -338,7 +338,7 @@ export default {
 }
 
 .purchaseCrypto_step3_right-container {
-  grid-row-gap: 28px;
+  grid-row-gap: 20px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
