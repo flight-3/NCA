@@ -493,7 +493,7 @@ export default {
   transform: scale(.5);
 }
 
-.connectWalletToDex_step5_check.is--checked .check-inner {
+.connectWalletToDex_step5_check.is--checked .connectWalletToDex_step5_check-inner {
   transform: scale(1.2);
 }
 
@@ -504,7 +504,7 @@ export default {
   height: 16px;
 }
 
-.connectWalletToDex_step5_add-ico, .btc-ico {
+.connectWalletToDex_step5_add-ico, .connectWalletToDex_step5_btc-ico {
   flex: none;
   width: 20px;
   height: 20px;
