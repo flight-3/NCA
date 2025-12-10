@@ -61,7 +61,7 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
-  padding: 40px;
+  padding: 32px;
   display: flex;
   overflow: hidden;
   box-shadow: 0 4px 20px #0000001a;
@@ -76,7 +76,7 @@ export default {
 }
 
 .purchaseCrypto_step2_main-container-3 {
-  grid-row-gap: 40px;
+  grid-row-gap: 32px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
@@ -224,7 +224,8 @@ export default {
   padding: 24px;
   text-decoration: none;
   display: flex;
-  max-width: 430px;
+  max-width: 100%;
+  width: 100%;
   min-width: 430px;
 }
 
@@ -327,7 +328,7 @@ export default {
   flex: 0 auto;
   justify-content: flex-start;
   align-items: center;
-  padding: 8px 16px;
+  padding: 6px 10px;
   text-decoration: none;
   display: flex;
 }
@@ -425,7 +426,7 @@ export default {
 }
 
 .purchaseCrypto_step2_right-container {
-  grid-row-gap: 28px;
+  grid-row-gap: 20px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
@@ -453,7 +454,8 @@ export default {
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  max-width: 430px;
+  max-width: 100%;
+  width: 100%;
   min-width: 430px;
   padding: 24px;
   text-decoration: none;
