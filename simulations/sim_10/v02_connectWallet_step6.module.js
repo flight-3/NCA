@@ -114,18 +114,18 @@ export default {
   background: #f64c07;
 }
 
-.connectWalletToDex_step6_buttons.is--active .wallet-icon {
+.connectWalletToDex_step6_buttons.is--active .connectWalletToDex_step6_wallet-icon {
   background: #ffffff42;
   color: #fff;
 }
 
-.connectWalletToDex_step6_buttons.is--active .wallet-count,
+.connectWalletToDex_step6_buttons.is--active .connectWalletToDex_step6_wallet-count,
 .buttons.is--active .wallet-address, 
 .buttons.is--active .btn-chev {
   color: #fff;
 }
 
-.connectWalletToDex_step6_buttons.is--active .btn-chev {
+.connectWalletToDex_step6_buttons.is--active .connectWalletToDex_step6_btn-chev {
   rotate: -180deg;
 }
 
