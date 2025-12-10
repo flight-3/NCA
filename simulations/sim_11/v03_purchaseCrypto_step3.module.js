@@ -1017,7 +1017,6 @@ export default {
     // ----------------------------------
     // State / constants
     // ----------------------------------
-    const Cookies = window.Cookies || null;
 
     const CRYPTOS = {
       btc: {
@@ -1215,23 +1214,22 @@ export default {
       }
     };
 
-    const persistState = () => {
-      if (!Cookies) return;
-      try {
-        Cookies.set(
-          "nca_purchaseCrypto_step3",
-          JSON.stringify({
-            sellKey: state.sellKey,
-            buyKey: state.buyKey,
-            sellAmount: state.sellAmount,
-            buyAmount: state.buyAmount,
-          }),
-          { sameSite: "Lax" }
-        );
-      } catch (e) {
-        // silent
-      }
-    };
+    const STORAGE_KEY = "nca_purchaseCrypto_step3";
+
+const persistState = () => {
+  try {
+    if (typeof window === "undefined" || !window.localStorage) return;
+    window.localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        sellKey: state.sellKey,
+        buyKey: state.buyKey,
+        sellAmount: state.sellAmount,
+        buyAmount: state.buyAmount,
+      })
+    );
+  } catch (e) {}
+};
 
     const syncSelectedLabels = () => {
       const sellCrypto = CRYPTOS[state.sellKey];
