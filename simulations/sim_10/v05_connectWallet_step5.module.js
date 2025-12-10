@@ -746,8 +746,8 @@ export default {
     const handleTrigger2Click = () => {
       if (completed) return;
 
-      const circle1 = check1.querySelector(".check");
-      const circle2 = check2.querySelector(".check");
+      const circle1 = check1.querySelector(".connectWalletToDex_step5_check");
+      const circle2 = check2.querySelector(".connectWalletToDex_step5_check");
 
       circle1?.classList.remove("is--checked");
       circle2?.classList.add("is--checked");
