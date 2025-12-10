@@ -1,0 +1,1374 @@
+// swapCrypto_step3.module.js
+export default {
+  mount(rootEl, props = {}, callbacks = {}) {
+    const { complete, resolve, onSuccess, next } = callbacks;
+    const done = () => complete?.() || resolve?.() || onSuccess?.() || next?.();
+    const gs = window.gsap || null;
+
+    if (!rootEl) return;
+
+    const STYLE_ID = "swapCrypto_step3_styles";
+
+    if (!document.getElementById(STYLE_ID)) {
+      const styleEl = document.createElement("style");
+      styleEl.id = STYLE_ID;
+      styleEl.textContent = `
+.button-large {
+  color: #fff;
+  letter-spacing: -.02em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-family: Inter, sans-serif;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 140%;
+  text-decoration: none;
+}
+
+.buttons-2 {
+  grid-column-gap: 10px;
+  background-image: linear-gradient(82.37deg, #f64c07 0%, #ff7943 100%);
+  border: 2px solid #f64c07;
+  border-radius: 8px;
+  flex: 0 auto;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  padding-left: 24px;
+  padding-right: 24px;
+  text-decoration: none;
+  display: flex;
+  box-shadow: 0 4px 10px #eb855c40;
+}
+
+.canvas-wrap {
+  grid-row-gap: 64px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.container {
+  grid-row-gap: 40px;
+  background-color: #fff;
+  border-radius: 20px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  max-width: 562px;
+  padding: 40px;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 4px 20px #0000001a;
+}
+
+.main-container {
+  grid-row-gap: 24px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  max-width: 482px;
+  display: flex;
+}
+
+.header-container {
+  grid-row-gap: 16px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
+}
+
+.title-container {
+  grid-row-gap: 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  display: flex;
+}
+
+.title-style {
+  color: #2f2f30;
+  letter-spacing: -.04em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 130%;
+}
+
+.tab-container {
+  grid-column-gap: 40px;
+  grid-row-gap: 40px;
+  flex-flow: column;
+  flex: 0 auto;
+  justify-content: flex-start;
+  align-items: stretch;
+  display: flex;
+}
+
+.limit-price-container {
+  grid-row-gap: 8px;
+  background-color: #f9f9f9;
+  border: 2px solid #ebebeb;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+}
+
+.limit-price-label {
+  color: #2f2f30;
+  letter-spacing: -.04em;
+  flex: none;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  line-height: 130%;
+  text-decoration: none;
+}
+
+.limit-price-input-container {
+  grid-column-gap: 32px;
+  grid-row-gap: 32px;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  display: flex;
+}
+
+.limit-price-input-container.is--alt {
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: -8px;
+}
+
+.currency-label-container {
+  grid-row-gap: 4px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  text-decoration: none;
+  display: flex;
+}
+
+.currency-label {
+  grid-column-gap: 8px;
+  flex: 0 auto;
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-decoration: none;
+  display: flex;
+}
+
+.price-input-container {
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: flex-end;
+  text-decoration: none;
+  display: flex;
+}
+
+.price-input {
+  opacity: .2;
+  color: #1f1f1f;
+  text-align: right;
+  letter-spacing: -.04em;
+  cursor: text;
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2.5rem;
+  font-weight: 500;
+  line-height: 130%;
+  text-decoration: none;
+  outline: none;
+}
+
+.price-input.is--value {
+  opacity: 1;
+}
+
+.price-input.is--error {
+  color: #d93a3a;
+  opacity: 1;
+}
+
+.market-button {
+  grid-column-gap: 12px;
+  flex: 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+
+.selling-amount-container {
+  grid-column-gap: 8px;
+  border-radius: 1000px;
+  flex: 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  text-decoration: none;
+  display: flex;
+}
+
+.selling-amount-label-text {
+  color: #7a7a7a;
+  letter-spacing: -.04em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: .8125rem;
+  font-weight: 500;
+  line-height: 130%;
+  text-decoration: none;
+}
+
+.selling-currency-container {
+  grid-column-gap: 16px;
+  background-color: #efefef;
+  border: 1px solid #ebebeb;
+  border-radius: 1000px;
+  flex: 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 8px 8px 8px 16px;
+  text-decoration: none;
+  display: flex;
+  position: relative;
+}
+
+.selling-currency-label-text {
+  color: #1f1f1f;
+  letter-spacing: -.04em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 130%;
+  text-decoration: none;
+}
+
+.selling-price-usd {
+  opacity: .2;
+  color: #1f1f1f;
+  letter-spacing: -.04em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: .875rem;
+  font-weight: 500;
+  line-height: 130%;
+  text-decoration: none;
+}
+
+.right-container {
+  grid-row-gap: 24px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  min-width: 482px;
+  max-width: 482px;
+  display: flex;
+}
+
+.right-top-container {
+  grid-row-gap: 8px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  text-decoration: none;
+  display: flex;
+  position: relative;
+}
+
+.right-selling-container {
+  grid-row-gap: 8px;
+  cursor: pointer;
+  background-color: #f9f9f9;
+  border: 2px solid #f64c07;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 24px;
+  text-decoration: none;
+  display: flex;
+}
+
+.right-slippage-container {
+  grid-column-gap: 40px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  display: flex;
+}
+
+.viewrates_container {
+  grid-row-gap: 8px;
+  background-color: #f9f9f9;
+  border: 2px solid #ebebeb;
+  border-radius: 12px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 16px 24px;
+  text-decoration: none;
+  display: flex;
+}
+
+.viewrates_text {
+  opacity: .8;
+  color: #7a7a7a;
+  letter-spacing: -.04em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 100%;
+}
+
+.buttons-5 {
+  grid-column-gap: 10px;
+  background-color: #f64c07;
+  border-radius: 8px;
+  justify-content: center;
+  align-items: center;
+  height: 56px;
+  padding-left: 24px;
+  padding-right: 24px;
+  display: flex;
+  cursor: pointer;
+}
+
+.buttons-5.is--inactive {
+  opacity: .5;
+  pointer-events: none;
+}
+
+.button-large-5 {
+  color: #fff;
+  letter-spacing: -.02em;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 1.125rem;
+  font-weight: 500;
+  line-height: 140%;
+  text-decoration: none;
+}
+
+.cur-ico {
+  background-color: #0000001a;
+  border-radius: 100%;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  overflow: hidden;
+}
+
+.exch-ico {
+  z-index: 1;
+  background-color: #202020;
+  border-radius: 100%;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  margin-top: -24px;
+  margin-bottom: -24px;
+  display: flex;
+  position: relative;
+  align-self: center;
+}
+
+.exch-ico-inner {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.wallet-ico {
+  flex: none;
+  width: 16px;
+  height: 16px;
+}
+
+.chev-ico {
+  flex: none;
+  width: 24px;
+  height: 24px;
+}
+
+.cur-ico-img {
+  object-fit: cover;
+  width: 32px;
+  height: 32px;
+}
+
+.selection_dropdown {
+  z-index: 999;
+  opacity: 0;
+  background-color: #fff;
+  border: 2px solid #ebebeb;
+  border-radius: 20px;
+  flex-flow: column;
+  padding: 8px;
+  transition-property: opacity;
+  transition-duration: .2s;
+  transition-timing-function: ease;
+  display: none;
+  position: absolute;
+  top: -100%;
+  left: 0%;
+  box-shadow: 0 4px 10px #eb855c40;
+}
+
+.selection_dropdown.is--active {
+  opacity: 1;
+  display: flex;
+}
+
+.select_crypto-item {
+  grid-column-gap: 16px;
+  grid-row-gap: 16px;
+  cursor: pointer;
+  border-radius: 12px;
+  justify-content: flex-start;
+  align-items: center;
+  width: 250px;
+  padding: 10px 8px;
+  transition: all .35s cubic-bezier(.075, .82, .165, 1);
+  display: flex;
+}
+
+.select_crypto-item:hover {
+  background-color: #f8f8f8;
+}
+
+.select_crypto-details {
+  grid-column-gap: 12px;
+  grid-row-gap: 12px;
+  justify-content: flex-start;
+  align-items: center;
+  display: flex;
+}
+
+.crypto-detail-name {
+  color: #1f1f1f;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 130%;
+}
+
+.crypto-detail-abbr {
+  color: #7a7a7a;
+  font-weight: 400;
+}
+
+.select-d-line {
+  background-color: #ebebeb;
+  height: 1px;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+
+.sim-toast {
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: #151515;
+  color: #fff;
+  font-size: 0.75rem;
+  line-height: 100%;
+  opacity: 0;
+  transform: translateY(4px);
+  pointer-events: none;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sim-toast.is--visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.sim-toast_wrap {
+  position: absolute;
+  bottom: 40px;
+  height: 0px;
+}
+      `;
+      document.head.appendChild(styleEl);
+    }
+
+    rootEl.innerHTML = `
+      <div class="canvas-wrap">
+        <div data-sim-view data-sim-view-1 class="container">
+          <div class="main-container">
+            <div class="header-container">
+              <div class="title-container">
+                <div class="title-style">Swap</div>
+              </div>
+            </div>
+            <div data-sim-tab-contain class="tab-container">
+              <div data-sim-tab-1 class="right-container">
+                <div class="right-top-container">
+                  <div data-sim-sell-area class="right-selling-container">
+                    <div class="limit-price-input-container">
+                      <div class="limit-price-label">Selling</div>
+                      <div class="selling-amount-container">
+                        <div class="currency-label-container">
+                          <div class="currency-label">
+                            <div class="selling-amount-label-text">
+                              Balance:
+                              <span data-sim-max-selling>0.1826</span>
+                              <span data-sim-selected-selling>ETH</span>
+                            </div>
+                          </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="wallet-ico">
+                          <path d="M12.6673 4.66667H12.0007V4C12.0007 3.46957 11.7899 2.96086 11.4149 2.58579C11.0398 2.21071 10.5311 2 10.0007 2H3.33398C2.80355 2 2.29484 2.21071 1.91977 2.58579C1.5447 2.96086 1.33398 3.46957 1.33398 4V4V12C1.33398 12.5304 1.5447 13.0391 1.91977 13.4142C2.29484 13.7893 2.80355 14 3.33398 14H12.6673C13.1977 14 13.7065 13.7893 14.0815 13.4142C14.4566 13.0391 14.6673 12.5304 14.6673 12V6.66667C14.6673 6.13623 14.4566 5.62753 14.0815 5.25245C13.7065 4.87738 13.1977 4.66667 12.6673 4.66667ZM3.33398 3.33333H10.0007C10.1775 3.33333 10.347 3.40357 10.4721 3.5286C10.5971 3.65362 10.6673 3.82319 10.6673 4V4.66667H3.33398C3.15717 4.66667 2.9876 4.59643 2.86258 4.4714C2.73756 4.34638 2.66732 4.17681 2.66732 4C2.66732 3.82319 2.73756 3.65362 2.86258 3.5286C2.9876 3.40357 3.15717 3.33333 3.33398 3.33333V3.33333ZM13.334 10H12.6673C12.4905 10 12.3209 9.92976 12.1959 9.80474C12.0709 9.67971 12.0007 9.51014 12.0007 9.33333C12.0007 9.15652 12.0709 8.98695 12.1959 8.86193C12.3209 8.7369 12.4905 8.66667 12.6673 8.66667H13.334V10ZM13.334 7.33333H12.6673C12.1369 7.33333 11.6282 7.54405 11.2531 7.91912C10.878 8.29419 10.6673 8.8029 10.6673 9.33333C10.6673 9.86377 10.878 10.3725 11.2531 10.7475C11.6282 11.1226 12.1369 11.3333 12.6673 11.3333H13.334V12C13.334 12.1768 13.2637 12.3464 13.1387 12.4714C13.0137 12.5964 12.8441 12.6667 12.6673 12.6667H3.33398C3.15717 12.6667 2.9876 12.5964 2.86258 12.4714C2.73756 12.3464 2.66732 12.1768 2.66732 12V5.88667C2.8815 5.96201 3.10694 6.00034 3.33398 6H12.6673C12.8441 6 13.0137 6.07024 13.1387 6.19526C13.2637 6.32029 13.334 6.48986 13.334 6.66667V7.33333Z" fill="#7A7A7A"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="limit-price-input-container is--alt">
+                      <div data-sim-selling-crypto class="selling-currency-container">
+                        <div class="market-button">
+                          <div data-sim-selected-selling-ico class="cur-ico">
+                            <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cad7c2be8398af2e8_eth-logo.svg" class="cur-ico-img">
+                          </div>
+                          <div class="currency-label-container">
+                            <div class="currency-label">
+                              <div data-sim-selected-selling class="selling-currency-label-text">ETH</div>
+                            </div>
+                          </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="chev-ico">
+                          <path d="M16.9997 9.1697C16.8123 8.98345 16.5589 8.87891 16.2947 8.87891C16.0305 8.87891 15.7771 8.98345 15.5897 9.1697L11.9997 12.7097L8.4597 9.1697C8.27234 8.98345 8.01889 8.87891 7.7547 8.87891C7.49052 8.87891 7.23707 8.98345 7.0497 9.1697C6.95598 9.26266 6.88158 9.37326 6.83081 9.49512C6.78004 9.61698 6.75391 9.74769 6.75391 9.8797C6.75391 10.0117 6.78004 10.1424 6.83081 10.2643C6.88158 10.3861 6.95598 10.4967 7.0497 10.5897L11.2897 14.8297C11.3827 14.9234 11.4933 14.9978 11.6151 15.0486C11.737 15.0994 11.8677 15.1255 11.9997 15.1255C12.1317 15.1255 12.2624 15.0994 12.3843 15.0486C12.5061 14.9978 12.6167 14.9234 12.7097 14.8297L16.9997 10.5897C17.0934 10.4967 17.1678 10.3861 17.2186 10.2643C17.2694 10.1424 17.2955 10.0117 17.2955 9.8797C17.2955 9.74769 17.2694 9.61698 17.2186 9.49512C17.1678 9.37326 17.0934 9.26266 16.9997 9.1697Z" fill="#7A7A7A"></path>
+                        </svg>
+                        <div data-sim-sell-dropdown class="selection_dropdown">
+                          <div data-sim-crypto-select="btc" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cdc09e9e742cbdff5_btc-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">Bitcoin</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">BTC</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="eth" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cad7c2be8398af2e8_eth-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">Ethereum</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">ETH</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="xrp" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cecd803e93aa1a9d1_xrp-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">XRP</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">XRP</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="bnb" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c63efaa27da6d1b15_bnb-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">BNB</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">BNB</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="usdc" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c5c1e6e07d92c9228_usdc-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">USDC</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">USDC</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="price-input-container">
+                        <div data-sim-selling-input class="price-input" tabindex="0" contenteditable="true">0.00</div>
+                        <div data-sim-selling-usd-value class="selling-price-usd">$0</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="exch-ico">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="exch-ico-inner">
+                      <path d="M10.0002 5.99986C9.73497 5.99986 9.48062 6.10522 9.29308 6.29275C9.10554 6.48029 9.00019 6.73465 9.00019 6.99986L9.00019 18.5899L6.71019 16.2899C6.52188 16.1016 6.26649 15.9958 6.00019 15.9958C5.73388 15.9958 5.47849 16.1016 5.29019 16.2899C5.10188 16.4782 4.99609 16.7336 4.99609 16.9999C4.99609 17.2662 5.10188 17.5216 5.29019 17.7099L9.29019 21.7099C9.43081 21.8486 9.60938 21.9426 9.80337 21.98C9.99736 22.0174 10.1981 21.9964 10.3802 21.9199C10.5628 21.8448 10.7191 21.7174 10.8295 21.5537C10.9398 21.39 10.9992 21.1973 11.0002 20.9999L11.0002 6.99986C11.0002 6.73465 10.8948 6.48029 10.7073 6.29275C10.5198 6.10522 10.2654 5.99986 10.0002 5.99986ZM13.6202 2.07986C13.4376 2.15488 13.2812 2.28228 13.1709 2.446C13.0606 2.60972 13.0012 2.80244 13.0002 2.99986L13.0002 16.9999C13.0002 17.2651 13.1055 17.5194 13.2931 17.707C13.4806 17.8945 13.735 17.9999 14.0002 17.9999C14.2654 17.9999 14.5198 17.8945 14.7073 17.707C14.8948 17.5194 15.0002 17.2651 15.0002 16.9999L15.0002 5.40986L17.2902 7.70986C17.3831 7.80359 17.4937 7.87798 17.6156 7.92875C17.7375 7.97952 17.8682 8.00566 18.0002 8.00566C18.1322 8.00566 18.2629 7.97952 18.3848 7.92875C18.5066 7.87798 18.6172 7.80359 18.7102 7.70986C18.8039 7.6169 18.8783 7.5063 18.9291 7.38444C18.9798 7.26258 19.006 7.13187 19.006 6.99986C19.006 6.86785 18.9798 6.73714 18.9291 6.61528C18.8783 6.49343 18.8039 6.38283 18.7102 6.28986L14.7102 2.28986C14.5696 2.1511 14.391 2.05711 14.197 2.01973C14.003 1.98236 13.8023 2.00328 13.6202 2.07986V2.07986Z" fill="white"></path>
+                    </svg>
+                  </div>
+
+                  <div data-sim-buy-area class="limit-price-container">
+                    <div class="limit-price-input-container">
+                      <div class="limit-price-label">Buying</div>
+                      <div class="selling-amount-container">
+                        <div class="currency-label-container">
+                          <div class="currency-label">
+                            <div class="selling-amount-label-text">
+                              0 <span data-sim-selected-buying>USDC</span>
+                            </div>
+                          </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="wallet-ico">
+                          <path d="M12.6673 4.66667H12.0007V4C12.0007 3.46957 11.7899 2.96086 11.4149 2.58579C11.0398 2.21071 10.5311 2 10.0007 2H3.33398C2.80355 2 2.29484 2.21071 1.91977 2.58579C1.5447 2.96086 1.33398 3.46957 1.33398 4V4V12C1.33398 12.5304 1.5447 13.0391 1.91977 13.4142C2.29484 13.7893 2.80355 14 3.33398 14H12.6673C13.1977 14 13.7065 13.7893 14.0815 13.4142C14.4566 13.0391 14.6673 12.5304 14.6673 12V6.66667C14.6673 6.13623 14.4566 5.62753 14.0815 5.25245C13.7065 4.87738 13.1977 4.66667 12.6673 4.66667ZM3.33398 3.33333H10.0007C10.1775 3.33333 10.347 3.40357 10.4721 3.5286C10.5971 3.65362 10.6673 3.82319 10.6673 4V4.66667H3.33398C3.15717 4.66667 2.9876 4.59643 2.86258 4.4714C2.73756 4.34638 2.66732 4.17681 2.66732 4C2.66732 3.82319 2.73756 3.65362 2.86258 3.5286C2.9876 3.40357 3.15717 3.33333 3.33398 3.33333V3.33333ZM13.334 10H12.6673C12.4905 10 12.3209 9.92976 12.1959 9.80474C12.0709 9.67971 12.0007 9.51014 12.0007 9.33333C12.0007 9.15652 12.0709 8.98695 12.1959 8.86193C12.3209 8.7369 12.4905 8.66667 12.6673 8.66667H13.334V10ZM13.334 7.33333H12.6673C12.1369 7.33333 11.6282 7.54405 11.2531 7.91912C10.878 8.29419 10.6673 8.8029 10.6673 9.33333C10.6673 9.86377 10.878 10.3725 11.2531 10.7475C11.6282 11.1226 12.1369 11.3333 12.6673 11.3333H13.334V12C13.334 12.1768 13.2637 12.3464 13.1387 12.4714C13.0137 12.5964 12.8441 12.6667 12.6673 12.6667H3.33398C3.15717 12.6667 2.9876 12.5964 2.86258 12.4714C2.73756 12.3464 2.66732 12.1768 2.66732 12V5.88667C2.8815 5.96201 3.10694 6.00034 3.33398 6H12.6673C12.8441 6 13.0137 6.07024 13.1387 6.19526C13.2637 6.32029 13.334 6.48986 13.334 6.66667V7.33333Z" fill="#7A7A7A"></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="limit-price-input-container">
+                      <div data-sim-buying-crypto class="selling-currency-container">
+                        <div class="market-button">
+                          <div data-sim-selected-buying-ico class="cur-ico">
+                            <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c5c1e6e07d92c9228_usdc-logo.svg" class="cur-ico-img">
+                          </div>
+                          <div class="currency-label-container">
+                            <div class="currency-label">
+                              <div data-sim-selected-buying class="selling-currency-label-text">USDC</div>
+                            </div>
+                          </div>
+                        </div>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="chev-ico">
+                          <path d="M16.9997 9.1697C16.8123 8.98345 16.5589 8.87891 16.2947 8.87891C16.0305 8.87891 15.7771 8.98345 15.5897 9.1697L11.9997 12.7097L8.4597 9.1697C8.27234 8.98345 8.01889 8.87891 7.7547 8.87891C7.49052 8.87891 7.23707 8.98345 7.0497 9.1697C6.95598 9.26266 6.88158 9.37326 6.83081 9.49512C6.78004 9.61698 6.75391 9.74769 6.75391 9.8797C6.75391 10.0117 6.78004 10.1424 6.83081 10.2643C6.88158 10.3861 6.95598 10.4967 7.0497 10.5897L11.2897 14.8297C11.3827 14.9234 11.4933 14.9978 11.6151 15.0486C11.737 15.0994 11.8677 15.1255 11.9997 15.1255C12.1317 15.1255 12.2624 15.0994 12.3843 15.0486C12.5061 14.9978 12.6167 14.9234 12.7097 14.8297L16.9997 10.5897C17.0934 10.4967 17.1678 10.3861 17.2186 10.2643C17.2694 10.1424 17.2955 10.0117 17.2955 9.8797C17.2955 9.74769 17.2694 9.61698 17.2186 9.49512C17.1678 9.37326 17.0934 9.26266 16.9997 9.1697Z" fill="#7A7A7A"></path>
+                        </svg>
+                        <div data-sim-buy-dropdown class="selection_dropdown">
+                          <div data-sim-crypto-select="btc" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cdc09e9e742cbdff5_btc-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">Bitcoin</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">BTC</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="eth" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cad7c2be8398af2e8_eth-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">Ethereum</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">ETH</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="xrp" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cecd803e93aa1a9d1_xrp-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">XRP</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">XRP</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="bnb" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c63efaa27da6d1b15_bnb-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">BNB</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">BNB</div>
+                            </div>
+                          </div>
+                          <div class="select-d-line"></div>
+                          <div data-sim-crypto-select="usdc" class="select_crypto-item">
+                            <div data-sim-crypto-img class="cur-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c5c1e6e07d92c9228_usdc-logo.svg" class="cur-ico-img">
+                            </div>
+                            <div class="select_crypto-details">
+                              <div class="crypto-detail-name">USDC</div>
+                              <div data-sim-crypto-name class="crypto-detail-abbr">USDC</div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="price-input-container">
+                        <div data-sim-buying-input class="price-input" tabindex="0" contenteditable="true">0.00</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="right-slippage-container">
+                  <div class="viewrates_container">
+                    <div data-sim-conversion-rate-text class="viewrates_text">Enter amount to view rates</div>
+                  </div>
+                </div>
+              </div>
+
+              <div data-sim-trigger-1 class="buttons-5 is--inactive">
+                <div class="button-large-5">Swap</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="sim-toast_wrap">
+          <div class="sim-toast" data-sim-toast>
+            <span data-sim-toast-text>This amount is higher than your available balance for this asset.</span>
+          </div>
+        </div>
+      </div>
+    `;
+
+    const view = rootEl.querySelector("[data-sim-view-1]");
+    if (!view) return;
+
+    if (gs) {
+      gs.set(view, { autoAlpha: 0, y: 60 });
+      gs.to(view, { autoAlpha: 1, y: 0, duration: 0.6, ease: "power2.out" });
+    } else {
+      view.style.opacity = "1";
+      view.style.transform = "translateY(0)";
+    }
+
+    const storage =
+      (typeof window !== "undefined" && window.localStorage) || null;
+
+    const sellArea = view.querySelector("[data-sim-sell-area]");
+    const buyArea = view.querySelector("[data-sim-buy-area]");
+    const sellingCryptoBtn = view.querySelector("[data-sim-selling-crypto]");
+    const buyingCryptoBtn = view.querySelector("[data-sim-buying-crypto]");
+    const sellDropdown = view.querySelector("[data-sim-sell-dropdown]");
+    const buyDropdown = view.querySelector("[data-sim-buy-dropdown]");
+    const sellingInputEl = view.querySelector("[data-sim-selling-input]");
+    const buyingInputEl = view.querySelector("[data-sim-buying-input]");
+    const sellingUsdEl = view.querySelector("[data-sim-selling-usd-value]");
+    const maxSellingEl = view.querySelector("[data-sim-max-selling]");
+    const selectedSellingTextEls = view.querySelectorAll(
+      "[data-sim-selected-selling]"
+    );
+    const selectedBuyingTextEls = view.querySelectorAll(
+      "[data-sim-selected-buying]"
+    );
+    const selectedSellingIconEl = view.querySelector(
+      "[data-sim-selected-selling-ico] img"
+    );
+    const selectedBuyingIconEl = view.querySelector(
+      "[data-sim-selected-buying-ico] img"
+    );
+    const conversionRateTextEl = view.querySelector(
+      "[data-sim-conversion-rate-text]"
+    );
+    const trigger1 = view.querySelector("[data-sim-trigger-1]");
+    const toast = rootEl.querySelector("[data-sim-toast]");
+    const toastText = toast
+      ? toast.querySelector("[data-sim-toast-text]")
+      : null;
+
+    if (
+      !sellArea ||
+      !buyArea ||
+      !sellingCryptoBtn ||
+      !buyingCryptoBtn ||
+      !sellDropdown ||
+      !buyDropdown ||
+      !sellingInputEl ||
+      !buyingInputEl ||
+      !sellingUsdEl ||
+      !maxSellingEl ||
+      !conversionRateTextEl ||
+      !trigger1
+    ) {
+      console.warn("[swapCrypto_step3] Missing required elements.");
+      return;
+    }
+
+    const CRYPTOS = {
+      btc: {
+        key: "btc",
+        symbol: "BTC",
+        name: "Bitcoin",
+        img: "https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cdc09e9e742cbdff5_btc-logo.svg",
+      },
+      eth: {
+        key: "eth",
+        symbol: "ETH",
+        name: "Ethereum",
+        img: "https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cad7c2be8398af2e8_eth-logo.svg",
+      },
+      usdc: {
+        key: "usdc",
+        symbol: "USDC",
+        name: "USDC",
+        img: "https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c5c1e6e07d92c9228_usdc-logo.svg",
+      },
+      bnb: {
+        key: "bnb",
+        symbol: "BNB",
+        name: "BNB",
+        img: "https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5c63efaa27da6d1b15_bnb-logo.svg",
+      },
+      xrp: {
+        key: "xrp",
+        symbol: "XRP",
+        name: "XRP",
+        img: "https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/69182e5cecd803e93aa1a9d1_xrp-logo.svg",
+      },
+    };
+
+    const defaultPrices = {
+      btc: 68000,
+      eth: 3500,
+      usdc: 1,
+      bnb: 500,
+      xrp: 0.6,
+    };
+
+    const prices = {
+      ...defaultPrices,
+      ...(props && props.prices ? props.prices : {}),
+    };
+
+    const COINGECKO_SIMPLE_PRICE_URL =
+      "https://api.coingecko.com/api/v3/simple/price";
+
+    const COINGECKO_ID_MAP = {
+      btc: "bitcoin",
+      eth: "ethereum",
+      usdc: "usd-coin",
+      bnb: "binancecoin",
+      xrp: "ripple",
+    };
+
+    const getPrice = (key) => {
+      const v = prices[key];
+      return typeof v === "number" && v > 0 ? v : defaultPrices[key];
+    };
+
+    const DEFAULT_FEE_PERCENT = props.feePercent ?? 0.25;
+    const DEFAULT_PRICE_IMPACT = props.priceImpact ?? -0.02;
+    const DEFAULT_NETWORK_FEE_USD = props.networkFeeUsd ?? 0.5;
+
+    const initialMaxNonUsdc = 0.1826;
+    let lastEdited = "sell";
+
+    const state = {
+      sellKey: "eth",
+      buyKey: "usdc",
+      sellAmount: 0,
+      buyAmount: 0,
+      maxAmount: initialMaxNonUsdc,
+      overMax: false,
+    };
+
+    let completed = false;
+    const safeDone = () => {
+      if (completed) return;
+      completed = true;
+      done?.();
+    };
+
+    const getInputValue = (el) => {
+      if (!el) return "";
+      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") return el.value;
+      return el.textContent || "";
+    };
+
+    const setInputValue = (el, val) => {
+      if (!el) return;
+      if (el.tagName === "INPUT" || el.tagName === "TEXTAREA") {
+        el.value = val;
+      } else {
+        el.textContent = val;
+      }
+    };
+
+    const formatAmount = (val) => {
+      if (!val || !isFinite(val)) return "0.00";
+      if (val < 0.00001) return val.toExponential(2);
+      return val.toFixed(5).replace(/0+$/g, "").replace(/\.$/, "");
+    };
+
+    const setMaxForSellKey = () => {
+      if (state.sellKey === "usdc") {
+        state.maxAmount = 900;
+        maxSellingEl.textContent = "900";
+      } else if (state.sellKey === "xrp") {
+        state.maxAmount = 400;
+        maxSellingEl.textContent = "400";
+      } else {
+        state.maxAmount = initialMaxNonUsdc;
+        maxSellingEl.textContent = initialMaxNonUsdc.toString();
+      }
+    };
+
+    const updateUsdValue = () => {
+      const amount = state.sellAmount;
+      const usd = amount * getPrice(state.sellKey);
+      if (!amount || !isFinite(usd)) {
+        sellingUsdEl.textContent = "$0";
+        return;
+      }
+      if (usd < 0.01) {
+        sellingUsdEl.textContent = "<$0.01";
+      } else {
+        sellingUsdEl.textContent = `$${usd.toLocaleString(undefined, {
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 2,
+        })}`;
+      }
+    };
+
+    const showToast = (msg) => {
+      if (!toast) return;
+      if (toastText && msg) toastText.textContent = msg;
+
+      toast.classList.add("is--visible");
+
+      if (gs) {
+        gs.killTweensOf(toast);
+        gs.set(toast, { autoAlpha: 0, y: 10 });
+        gs.to(toast, {
+          autoAlpha: 1,
+          y: 0,
+          duration: 0.2,
+          ease: "power2.out",
+        });
+        gs.to(toast, {
+          autoAlpha: 0,
+          y: 10,
+          duration: 0.25,
+          delay: 2,
+          ease: "power2.in",
+          onComplete: () => toast.classList.remove("is--visible"),
+        });
+      } else {
+        setTimeout(() => {
+          toast.classList.remove("is--visible");
+        }, 2000);
+      }
+    };
+
+    const setOverMaxState = (overMax) => {
+      state.overMax = overMax;
+      if (overMax) {
+        sellingInputEl.classList.add("is--error");
+        showToast(
+          props?.maxAmountToast ||
+            "This amount is higher than your available balance for this asset."
+        );
+      } else {
+        sellingInputEl.classList.remove("is--error");
+      }
+    };
+
+    const shouldDisableTrigger = () => {
+      if (!state.sellAmount || !isFinite(state.sellAmount)) return true;
+      if (!state.buyAmount || !isFinite(state.buyAmount)) return true;
+      if (state.overMax) return true;
+      if (state.sellKey === state.buyKey) return true;
+      return false;
+    };
+
+    const updateTriggerState = () => {
+      if (shouldDisableTrigger()) {
+        trigger1.classList.add("is--inactive");
+      } else {
+        trigger1.classList.remove("is--inactive");
+      }
+    };
+
+    const getSlippageDisplay = () => {
+      if (
+        !state.sellAmount ||
+        !state.buyAmount ||
+        !isFinite(state.sellAmount) ||
+        !isFinite(state.buyAmount) ||
+        state.overMax ||
+        state.sellKey === state.buyKey
+      ) {
+        return "";
+      }
+      const sellCrypto = CRYPTOS[state.sellKey];
+      const buyCrypto = CRYPTOS[state.buyKey];
+      const sellSymbol = sellCrypto ? sellCrypto.symbol : "";
+      const buySymbol = buyCrypto ? buyCrypto.symbol : "";
+      return `${formatAmount(state.sellAmount)} ${sellSymbol} ≈ ${formatAmount(
+        state.buyAmount
+      )} ${buySymbol}`;
+    };
+
+    const persistState = () => {
+      if (!storage) return;
+      const sellPrice = getPrice(state.sellKey);
+      const buyPrice = getPrice(state.buyKey);
+      const sellUsd = state.sellAmount * sellPrice || 0;
+      const buyUsd = state.buyAmount * buyPrice || 0;
+
+      let rateSellPerBuy = 0;
+      let rateBuyPerSell = 0;
+
+      if (state.buyAmount && isFinite(state.buyAmount) && state.buyAmount > 0) {
+        rateSellPerBuy = state.sellAmount / state.buyAmount;
+      }
+
+      if (
+        state.sellAmount &&
+        isFinite(state.sellAmount) &&
+        state.sellAmount > 0
+      ) {
+        rateBuyPerSell = state.buyAmount / state.sellAmount;
+      }
+
+      const payload = {
+        sellKey: state.sellKey,
+        buyKey: state.buyKey,
+        sellAmount: state.sellAmount,
+        buyAmount: state.buyAmount,
+        sellUsd,
+        buyUsd,
+        rateSellPerBuy,
+        rateBuyPerSell,
+        feePercent: DEFAULT_FEE_PERCENT,
+        priceImpact: DEFAULT_PRICE_IMPACT,
+        networkFeeUsd: DEFAULT_NETWORK_FEE_USD,
+        conversionRateText: getSlippageDisplay(),
+      };
+
+      try {
+        storage.setItem("nca_swapCrypto_step3", JSON.stringify(payload));
+      } catch (e) {}
+    };
+
+    const syncSelectedLabels = () => {
+      const sellCrypto = CRYPTOS[state.sellKey];
+      const buyCrypto = CRYPTOS[state.buyKey];
+      if (sellCrypto) {
+        selectedSellingTextEls.forEach((el) => {
+          el.textContent = sellCrypto.symbol;
+        });
+        if (selectedSellingIconEl) selectedSellingIconEl.src = sellCrypto.img;
+      }
+      if (buyCrypto) {
+        selectedBuyingTextEls.forEach((el) => {
+          el.textContent = buyCrypto.symbol;
+        });
+        if (selectedBuyingIconEl) selectedBuyingIconEl.src = buyCrypto.img;
+      }
+    };
+
+    const filterDropdownOptions = () => {
+      const sellItems = sellDropdown.querySelectorAll(
+        "[data-sim-crypto-select]"
+      );
+      const buyItems = buyDropdown.querySelectorAll("[data-sim-crypto-select]");
+
+      sellItems.forEach((item) => {
+        const key = item.getAttribute("data-sim-crypto-select");
+        item.style.display = key === state.buyKey ? "none" : "";
+      });
+
+      buyItems.forEach((item) => {
+        const key = item.getAttribute("data-sim-crypto-select");
+        item.style.display = key === state.sellKey ? "none" : "";
+      });
+    };
+
+    const parseNumeric = (raw) => {
+      if (!raw) return 0;
+      const cleaned = raw.replace(/,/g, "");
+      const v = parseFloat(cleaned);
+      if (Number.isNaN(v) || !isFinite(v) || v < 0) return 0;
+      return v;
+    };
+
+    const updateHasValueClasses = () => {
+      if (sellingInputEl) {
+        const sVal = parseNumeric(getInputValue(sellingInputEl));
+        if (sVal > 0) {
+          sellingInputEl.classList.add("is--value");
+        } else {
+          sellingInputEl.classList.remove("is--value");
+        }
+      }
+
+      if (buyingInputEl) {
+        const bVal = parseNumeric(getInputValue(buyingInputEl));
+        if (bVal > 0) {
+          buyingInputEl.classList.add("is--value");
+        } else {
+          buyingInputEl.classList.remove("is--value");
+        }
+      }
+    };
+
+    const updateFromSide = (side) => {
+      const sellPrice = getPrice(state.sellKey);
+      const buyPrice = getPrice(state.buyKey);
+
+      if (!sellPrice || !buyPrice) return;
+
+      if (side === "sell") {
+        if (!state.sellAmount || !isFinite(state.sellAmount)) {
+          state.buyAmount = 0;
+          setInputValue(buyingInputEl, "");
+        } else {
+          const usd = state.sellAmount * sellPrice;
+          const buyAmount = usd / buyPrice;
+          state.buyAmount = buyAmount;
+          setInputValue(buyingInputEl, formatAmount(buyAmount));
+        }
+      } else {
+        if (!state.buyAmount || !isFinite(state.buyAmount)) {
+          state.sellAmount = 0;
+          setInputValue(sellingInputEl, "");
+        } else {
+          const usd = state.buyAmount * buyPrice;
+          const sellAmount = usd / sellPrice;
+          state.sellAmount = sellAmount;
+          setInputValue(sellingInputEl, formatAmount(sellAmount));
+        }
+      }
+
+      setOverMaxState(state.sellAmount > state.maxAmount);
+      updateUsdValue();
+      updateTriggerState();
+      updateHasValueClasses();
+      persistState();
+    };
+
+    const fetchLatestUsdRates = async () => {
+      const ids = Array.from(new Set(Object.values(COINGECKO_ID_MAP))).join(
+        ","
+      );
+      const url = `${COINGECKO_SIMPLE_PRICE_URL}?ids=${encodeURIComponent(
+        ids
+      )}&vs_currencies=usd`;
+
+      try {
+        const res = await fetch(url);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+
+        Object.entries(COINGECKO_ID_MAP).forEach(([symbolKey, cgId]) => {
+          const usd = data?.[cgId]?.usd;
+          if (typeof usd === "number" && !Number.isNaN(usd) && usd > 0) {
+            prices[symbolKey] = usd;
+          }
+        });
+
+        updateUsdValue();
+
+        if (state.sellAmount === 0 && state.buyAmount === 0) {
+          return;
+        }
+
+        updateFromSide(lastEdited);
+      } catch (err) {
+        console.warn(
+          "[swapCrypto_step3] Failed to fetch live prices; using defaults.",
+          err
+        );
+      }
+    };
+
+    const handleSideInput = (side, el) => {
+      const raw = getInputValue(el);
+      const value = parseNumeric(raw);
+
+      if (side === "sell") {
+        state.sellAmount = value;
+      } else {
+        state.buyAmount = value;
+      }
+
+      lastEdited = side;
+      updateFromSide(side);
+    };
+
+    const handleSideBlur = (side, el) => {
+      const raw = getInputValue(el);
+      const value = parseNumeric(raw);
+
+      if (!raw.trim() || !value) {
+        if (side === "sell") {
+          state.sellAmount = 0;
+        } else {
+          state.buyAmount = 0;
+        }
+        setInputValue(el, "0.00");
+      } else {
+        if (side === "sell") {
+          state.sellAmount = value;
+        } else {
+          state.buyAmount = value;
+        }
+        setInputValue(el, formatAmount(value));
+      }
+
+      updateFromSide(side);
+    };
+
+    sellingInputEl.addEventListener("input", () => {
+      handleSideInput("sell", sellingInputEl);
+    });
+
+    buyingInputEl.addEventListener("input", () => {
+      handleSideInput("buy", buyingInputEl);
+    });
+
+    sellingInputEl.addEventListener("blur", () => {
+      handleSideBlur("sell", sellingInputEl);
+    });
+
+    buyingInputEl.addEventListener("blur", () => {
+      handleSideBlur("buy", buyingInputEl);
+    });
+
+    const focusInput = (el) => {
+      if (!el) return;
+      el.focus();
+      if (el.tagName !== "INPUT" && el.tagName !== "TEXTAREA") return;
+      const val = el.value;
+      el.setSelectionRange(val.length, val.length);
+    };
+
+    sellArea.addEventListener("click", (evt) => {
+      if (sellingCryptoBtn.contains(evt.target)) return;
+      if (sellDropdown.contains(evt.target)) return;
+      focusInput(sellingInputEl);
+    });
+
+    buyArea.addEventListener("click", (evt) => {
+      if (buyingCryptoBtn.contains(evt.target)) return;
+      if (buyDropdown.contains(evt.target)) return;
+      focusInput(buyingInputEl);
+    });
+
+    let openDropdown = null;
+
+    const closeDropdowns = () => {
+      sellDropdown.classList.remove("is--active");
+      buyDropdown.classList.remove("is--active");
+      openDropdown = null;
+    };
+
+    const openDropdownFor = (which) => {
+      filterDropdownOptions();
+      if (which === "sell") {
+        buyDropdown.classList.remove("is--active");
+        sellDropdown.classList.add("is--active");
+        openDropdown = sellDropdown;
+      } else {
+        sellDropdown.classList.remove("is--active");
+        buyDropdown.classList.add("is--active");
+        openDropdown = buyDropdown;
+      }
+    };
+
+    sellingCryptoBtn.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      if (sellDropdown.classList.contains("is--active")) {
+        closeDropdowns();
+      } else {
+        openDropdownFor("sell");
+      }
+    });
+
+    buyingCryptoBtn.addEventListener("click", (evt) => {
+      evt.stopPropagation();
+      if (buyDropdown.classList.contains("is--active")) {
+        closeDropdowns();
+      } else {
+        openDropdownFor("buy");
+      }
+    });
+
+    const handleDocumentClick = (evt) => {
+      if (!openDropdown) return;
+      if (
+        sellingCryptoBtn.contains(evt.target) ||
+        buyingCryptoBtn.contains(evt.target) ||
+        sellDropdown.contains(evt.target) ||
+        buyDropdown.contains(evt.target)
+      ) {
+        return;
+      }
+      closeDropdowns();
+    };
+
+    document.addEventListener("click", handleDocumentClick);
+
+    const attachDropdownHandlers = (dropdownEl, type) => {
+      const items = dropdownEl.querySelectorAll("[data-sim-crypto-select]");
+      items.forEach((item) => {
+        item.addEventListener("click", (evt) => {
+          evt.stopPropagation();
+          const key = item.getAttribute("data-sim-crypto-select");
+          const crypto = CRYPTOS[key];
+          if (!crypto) return;
+
+          if (type === "sell") {
+            if (key === state.buyKey) return;
+            state.sellKey = key;
+            setMaxForSellKey();
+          } else {
+            if (key === state.sellKey) return;
+            state.buyKey = key;
+          }
+
+          syncSelectedLabels();
+          filterDropdownOptions();
+          updateFromSide(lastEdited);
+          persistState();
+          closeDropdowns();
+        });
+      });
+    };
+
+    attachDropdownHandlers(sellDropdown, "sell");
+    attachDropdownHandlers(buyDropdown, "buy");
+
+    setMaxForSellKey();
+    syncSelectedLabels();
+    updateUsdValue();
+    updateTriggerState();
+    filterDropdownOptions();
+    setInputValue(sellingInputEl, "0.00");
+    setInputValue(buyingInputEl, "0.00");
+    updateHasValueClasses();
+
+    fetchLatestUsdRates();
+    const hourlyPriceInterval = setInterval(
+      fetchLatestUsdRates,
+      60 * 60 * 1000
+    );
+
+    const handleTriggerClick = () => {
+      if (trigger1.classList.contains("is--inactive")) return;
+
+      if (gs) {
+        gs.timeline({ defaults: { ease: "power2.out" } })
+          .to(trigger1, { scale: 0.98, duration: 0.12 })
+          .to(trigger1, { scale: 1, duration: 0.18 })
+          .add(() => safeDone(), "+=0.05");
+      } else {
+        safeDone();
+      }
+    };
+
+    trigger1.addEventListener("click", handleTriggerClick);
+  },
+};
