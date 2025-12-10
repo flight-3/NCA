@@ -841,8 +841,6 @@ export default {
       view.style.transform = "translateY(0)";
     }
 
-    const Cookies = window.Cookies || null;
-
     const CRYPTOS = {
       btc: {
         key: "btc",
@@ -947,31 +945,34 @@ export default {
       }
     };
 
-    // Load stored data from step 3
-    if (Cookies) {
-      try {
-        const raw = Cookies.get("nca_purchaseCrypto_step3");
-        if (raw) {
-          const saved = JSON.parse(raw);
-          if (saved && typeof saved === "object") {
-            if (saved.sellKey && CRYPTOS[saved.sellKey]) {
-              state.sellKey = saved.sellKey;
-            }
-            if (saved.buyKey && CRYPTOS[saved.buyKey]) {
-              state.buyKey = saved.buyKey;
-            }
-            if (typeof saved.sellAmount === "number" && saved.sellAmount > 0) {
-              state.sellAmount = saved.sellAmount;
-            }
-            if (typeof saved.buyAmount === "number" && saved.buyAmount > 0) {
-              state.buyAmount = saved.buyAmount;
-            }
-          }
-        }
-      } catch (e) {
-        console.warn("[purchaseCrypto_step4] Failed to read cookie state.", e);
-      }
+   const STORAGE_KEY = "nca_purchaseCrypto_step3";
+
+let saved = null;
+try {
+  if (typeof window !== "undefined" && window.localStorage) {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (raw && raw.trim()) {
+      saved = JSON.parse(raw);
     }
+  }
+} catch (e) {
+  console.warn("[purchaseCrypto_step4] Failed to read localStorage state.", e);
+}
+
+if (saved && typeof saved === "object") {
+  if (saved.sellKey && CRYPTOS[saved.sellKey]) {
+    state.sellKey = saved.sellKey;
+  }
+  if (saved.buyKey && CRYPTOS[saved.buyKey]) {
+    state.buyKey = saved.buyKey;
+  }
+  if (typeof saved.sellAmount === "number" && saved.sellAmount > 0) {
+    state.sellAmount = saved.sellAmount;
+  }
+  if (typeof saved.buyAmount === "number" && saved.buyAmount > 0) {
+    state.buyAmount = saved.buyAmount;
+  }
+}
 
     const syncSelectedLabels = () => {
       const sellCrypto = CRYPTOS[state.sellKey];
