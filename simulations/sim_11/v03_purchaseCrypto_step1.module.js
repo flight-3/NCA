@@ -196,7 +196,7 @@ export default {
   height: 100%;
   text-decoration: none;
   display: flex;
-  position: relative;
+  position: absolute;
   overflow: hidden;
 }
 
