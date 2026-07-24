@@ -432,6 +432,27 @@ export default {
   display: flex;
 }
 
+.connectWalletToDex_step6_logoutbtn:before {
+position: absolute;
+content: "Disconnect";
+font-size: 0.88rem;
+padding: 0.25rem 0.5rem;
+border-radius: 0.5rem;
+background: #fff;
+color: #4a4949;
+  border: 1px solid #7a7a7a;
+opacity: 0;
+transform: translateY(0rem);
+transition: all 300ms ease-out;
+top: -1.5rem;
+pointer-events: none;
+}
+
+.connectWalletToDex_step6_logoutbtn:hover:before {
+opacity: 1;
+transform: translateY(-1rem);
+}
+
 .connectWalletToDex_step6_logoutbtn_ico {
   width: 20px;
   height: 20px;
