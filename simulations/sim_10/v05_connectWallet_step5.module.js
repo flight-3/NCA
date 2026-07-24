@@ -509,6 +509,11 @@ width: 20px;
 height: 20px;
 }
 
+.connectWalletToDex_step5_btc-ico img{
+width: 20px;
+height: 20px;
+}
+
 .connectWalletToDex_step5_add-ico {
   flex: none;
   width: 20px;
