@@ -414,7 +414,7 @@ export default {
   flex: 0 auto;
   justify-content: center;
   align-items: center;
-  width: 70px;
+  min-width: 70px;
   padding: 8px 12px;
   display: flex;
 }
@@ -558,6 +558,17 @@ transform: translateY(-1rem);
   height: 16px;
 }
 
+.connectWalletToDex_step6_btc-ico {
+  display: flex;
+  width: 20px;
+  height: 20px;
+}
+
+.connectWalletToDex_step6_btc-ico img {
+  width: 20px;
+  height: 20px;
+}
+
 .connectWalletToDex_step6_add-ico, .connectWalletToDex_step6_btc-ico {
   flex: none;
   width: 20px;
@@ -582,7 +593,7 @@ transform: translateY(-1rem);
                   </div>
                   <div class="connectWalletToDex_step6_wallet-details">
                     <div class="connectWalletToDex_step6_wallet-count">2 Wallets</div>
-                    <div class="connectWalletToDex_step6_wallet-address">bc1qxy...9a0f</div>
+                    <div class="connectWalletToDex_step6_wallet-address">D3vN...2aLf</div>
                   </div>
                 </div>
                 <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="connectWalletToDex_step6_btn-chev">
@@ -615,7 +626,7 @@ transform: translateY(-1rem);
                           <div class="connectWalletToDex_step6_wallet-details">
                             <div class="connectWalletToDex_step6_wallet-name">Wallet 1</div>
                             <div class="connectWalletToDex_step6_wallet-address-container">
-                              <div class="connectWalletToDex_step6_wallet-label">bc1qxy...9a0f</div>
+                              <div class="connectWalletToDex_step6_wallet-label">7xKp...9QmR</div>
                               <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="connectWalletToDex_step6_copy-ico">
                                 <g opacity="0.8">
                                   <path d="M14 5.95967C13.9931 5.89843 13.9796 5.83809 13.96 5.77967V5.71967C13.9279 5.65113 13.8852 5.58812 13.8333 5.53301V5.53301L9.83333 1.53301C9.77822 1.48115 9.71521 1.4384 9.64667 1.40634C9.62677 1.40351 9.60657 1.40351 9.58667 1.40634C9.51894 1.3675 9.44415 1.34257 9.36667 1.33301H6.66667C6.13623 1.33301 5.62753 1.54372 5.25245 1.91879C4.87738 2.29387 4.66667 2.80257 4.66667 3.33301V3.99967H4C3.46957 3.99967 2.96086 4.21039 2.58579 4.58546C2.21071 4.96053 2 5.46924 2 5.99967V12.6663C2 13.1968 2.21071 13.7055 2.58579 14.0806C2.96086 14.4556 3.46957 14.6663 4 14.6663H9.33333C9.86377 14.6663 10.3725 14.4556 10.7475 14.0806C11.1226 13.7055 11.3333 13.1968 11.3333 12.6663V11.9997H12C12.5304 11.9997 13.0391 11.789 13.4142 11.4139C13.7893 11.0388 14 10.5301 14 9.99967V5.99967C14 5.99967 14 5.99967 14 5.95967ZM10 3.60634L11.7267 5.33301H10.6667C10.4899 5.33301 10.3203 5.26277 10.1953 5.13775C10.0702 5.01272 10 4.84315 10 4.66634V3.60634ZM10 12.6663C10 12.8432 9.92976 13.0127 9.80474 13.1377C9.67971 13.2628 9.51014 13.333 9.33333 13.333H4C3.82319 13.333 3.65362 13.2628 3.5286 13.1377C3.40357 13.0127 3.33333 12.8432 3.33333 12.6663V5.99967C3.33333 5.82286 3.40357 5.65329 3.5286 5.52827C3.65362 5.40325 3.82319 5.33301 4 5.33301H4.66667V9.99967C4.66667 10.5301 4.87738 11.0388 5.25245 11.4139C5.62753 11.789 6.13623 11.9997 6.66667 11.9997H10V12.6663ZM12.6667 9.99967C12.6667 10.1765 12.5964 10.3461 12.4714 10.4711C12.3464 10.5961 12.1768 10.6663 12 10.6663H6.66667C6.48986 10.6663 6.32029 10.5961 6.19526 10.4711C6.07024 10.3461 6 10.1765 6 9.99967V3.33301C6 3.1562 6.07024 2.98663 6.19526 2.8616C6.32029 2.73658 6.48986 2.66634 6.66667 2.66634H8.66667V4.66634C8.66667 5.19677 8.87738 5.70548 9.25245 6.08055C9.62753 6.45563 10.1362 6.66634 10.6667 6.66634H12.6667V9.99967Z" fill="#7A7A7A"></path>
@@ -626,14 +637,13 @@ transform: translateY(-1rem);
                         </div>
                         <div class="connectWalletToDex_step6_wallet-info">
                           <div class="connectWalletToDex_step6_network-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 56 56" fill="none" class="connectWalletToDex_step6_btc-ico">
-                              <path d="M28 56C43.464 56 56 43.464 56 28C56 12.536 43.464 0 28 0C12.536 0 0 12.536 0 28C0 43.464 12.536 56 28 56Z" fill="#F7931A"></path>
-                              <path d="M40.5814 24.535C41.1309 20.867 38.3361 18.8947 34.5176 17.5787L35.7566 12.6087L32.7326 11.8563L31.5251 16.695C30.7306 16.4955 29.9151 16.31 29.1014 16.1245L30.3176 11.2543L27.2936 10.5L26.0546 15.4682C25.3966 15.3177 24.7491 15.1708 24.1226 15.0133L24.1261 14.9975L19.9541 13.9562L19.1491 17.1867C19.1491 17.1867 21.3944 17.7013 21.3471 17.7327C22.5721 18.039 22.7926 18.8492 22.7559 19.4932L21.3454 25.1545C21.4294 25.1755 21.5379 25.207 21.6604 25.2542L21.3401 25.1755L19.3626 33.1065C19.2121 33.4775 18.8324 34.0357 17.9749 33.824C18.0064 33.8677 15.7769 33.2762 15.7769 33.2762L14.2754 36.7377L18.2129 37.7195C18.9444 37.9032 19.6619 38.0957 20.3671 38.276L19.1159 43.302L22.1381 44.0545L23.3771 39.0845C24.2031 39.3067 25.0046 39.5132 25.7886 39.7092L24.5531 44.6582L27.5771 45.4107L28.8284 40.3952C33.9874 41.3717 37.8654 40.978 39.4981 36.3125C40.8141 32.557 39.4334 30.3888 36.7191 28.9765C38.6966 28.5215 40.1841 27.2213 40.5814 24.535ZM33.6689 34.2265C32.7361 37.9837 26.4099 35.952 24.3589 35.4427L26.0214 28.784C28.0724 29.2967 34.6471 30.31 33.6689 34.2265ZM34.6051 24.4808C33.7529 27.8985 28.4889 26.1607 26.7826 25.7355L28.2876 19.698C29.9939 20.1232 35.4941 20.916 34.6051 24.4808Z" fill="white"></path>
-                            </svg>
-                            <div class="connectWalletToDex_step6_network-name">BTC</div>
+                            <div class="connectWalletToDex_step5_btc-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/6a637ef7ffa7bae7f5fc9289_solana.webp">
+                            </div>
+                            <div class="connectWalletToDex_step6_network-name">SOL</div>
                           </div>
                           <div class="connectWalletToDex_step6_balance-container">
-                            <div class="connectWalletToDex_step6_network-name">0.025401 BTC</div>
+                            <div class="connectWalletToDex_step6_network-name">2.84 SOL</div>
                           </div>
                           <div data-sim-trigger-2 class="connectWalletToDex_step6_logoutbtn is--active">
                             <svg xmlns="http://www.w3.org/2000/svg" class="connectWalletToDex_step6_logoutbtn_ico" width="20" height="20" fill="none"><path fill="currentColor" d="m8.508 5.175.658-.667v3.825a.833.833 0 0 0 1.667 0V4.508l.658.667a.833.833 0 0 0 1.183 0 .833.833 0 0 0 0-1.183l-2.083-2.084a.8.8 0 0 0-.275-.175.83.83 0 0 0-.633 0 .8.8 0 0 0-.275.175L7.324 3.992a.837.837 0 0 0 1.184 1.183M14.999 6.3a.848.848 0 1 0-1.2 1.2 5.375 5.375 0 1 1-7.6 0A.848.848 0 1 0 5 6.3a7.05 7.05 0 1 0 10 0"/></svg>
@@ -648,7 +658,7 @@ transform: translateY(-1rem);
                           <div class="connectWalletToDex_step6_wallet-details">
                             <div class="connectWalletToDex_step6_wallet-name">Wallet 2</div>
                             <div class="connectWalletToDex_step6_wallet-address-container">
-                              <div class="connectWalletToDex_step6_wallet-label">bc1q4p...2a0f</div>
+                              <div class="connectWalletToDex_step6_wallet-label">D3vN...2aLf</div>
                               <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 16 16" fill="none" class="connectWalletToDex_step6_copy-ico">
                                 <g opacity="0.8">
                                   <path d="M14 5.95967C13.9931 5.89843 13.9796 5.83809 13.96 5.77967V5.71967C13.9279 5.65113 13.8852 5.58812 13.8333 5.53301V5.53301L9.83333 1.53301C9.77822 1.48115 9.71521 1.4384 9.64667 1.40634C9.62677 1.40351 9.60657 1.40351 9.58667 1.40634C9.51894 1.3675 9.44415 1.34257 9.36667 1.33301H6.66667C6.13623 1.33301 5.62753 1.54372 5.25245 1.91879C4.87738 2.29387 4.66667 2.80257 4.66667 3.33301V3.99967H4C3.46957 3.99967 2.96086 4.21039 2.58579 4.58546C2.21071 4.96053 2 5.46924 2 5.99967V12.6663C2 13.1968 2.21071 13.7055 2.58579 14.0806C2.96086 14.4556 3.46957 14.6663 4 14.6663H9.33333C9.86377 14.6663 10.3725 14.4556 10.7475 14.0806C11.1226 13.7055 11.3333 13.1968 11.3333 12.6663V11.9997H12C12.5304 11.9997 13.0391 11.789 13.4142 11.4139C13.7893 11.0388 14 10.5301 14 9.99967V5.99967C14 5.99967 14 5.99967 14 5.95967ZM10 3.60634L11.7267 5.33301H10.6667C10.4899 5.33301 10.3203 5.26277 10.1953 5.13775C10.0702 5.01272 10 4.84315 10 4.66634V3.60634ZM10 12.6663C10 12.8432 9.92976 13.0127 9.80474 13.1377C9.67971 13.2628 9.51014 13.333 9.33333 13.333H4C3.82319 13.333 3.65362 13.2628 3.5286 13.1377C3.40357 13.0127 3.33333 12.8432 3.33333 12.6663V5.99967C3.33333 5.82286 3.40357 5.65329 3.5286 5.52827C3.65362 5.40325 3.82319 5.33301 4 5.33301H4.66667V9.99967C4.66667 10.5301 4.87738 11.0388 5.25245 11.4139C5.62753 11.789 6.13623 11.9997 6.66667 11.9997H10V12.6663ZM12.6667 9.99967C12.6667 10.1765 12.5964 10.3461 12.4714 10.4711C12.3464 10.5961 12.1768 10.6663 12 10.6663H6.66667C6.48986 10.6663 6.32029 10.5961 6.19526 10.4711C6.07024 10.3461 6 10.1765 6 9.99967V3.33301C6 3.1562 6.07024 2.98663 6.19526 2.8616C6.32029 2.73658 6.48986 2.66634 6.66667 2.66634H8.66667V4.66634C8.66667 5.19677 8.87738 5.70548 9.25245 6.08055C9.62753 6.45563 10.1362 6.66634 10.6667 6.66634H12.6667V9.99967Z" fill="#7A7A7A"></path>
@@ -659,14 +669,13 @@ transform: translateY(-1rem);
                         </div>
                         <div class="connectWalletToDex_step6_wallet-info">
                           <div class="connectWalletToDex_step6_network-container">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 56 56" fill="none" class="connectWalletToDex_step6_btc-ico">
-                              <path d="M28 56C43.464 56 56 43.464 56 28C56 12.536 43.464 0 28 0C12.536 0 0 12.536 0 28C0 43.464 12.536 56 28 56Z" fill="#F7931A"></path>
-                              <path d="M40.5814 24.535C41.1309 20.867 38.3361 18.8947 34.5176 17.5787L35.7566 12.6087L32.7326 11.8563L31.5251 16.695C30.7306 16.4955 29.9151 16.31 29.1014 16.1245L30.3176 11.2543L27.2936 10.5L26.0546 15.4682C25.3966 15.3177 24.7491 15.1708 24.1226 15.0133L24.1261 14.9975L19.9541 13.9562L19.1491 17.1867C19.1491 17.1867 21.3944 17.7013 21.3471 17.7327C22.5721 18.039 22.7926 18.8492 22.7559 19.4932L21.3454 25.1545C21.4294 25.1755 21.5379 25.207 21.6604 25.2542L21.3401 25.1755L19.3626 33.1065C19.2121 33.4775 18.8324 34.0357 17.9749 33.824C18.0064 33.8677 15.7769 33.2762 15.7769 33.2762L14.2754 36.7377L18.2129 37.7195C18.9444 37.9032 19.6619 38.0957 20.3671 38.276L19.1159 43.302L22.1381 44.0545L23.3771 39.0845C24.2031 39.3067 25.0046 39.5132 25.7886 39.7092L24.5531 44.6582L27.5771 45.4107L28.8284 40.3952C33.9874 41.3717 37.8654 40.978 39.4981 36.3125C40.8141 32.557 39.4334 30.3888 36.7191 28.9765C38.6966 28.5215 40.1841 27.2213 40.5814 24.535ZM33.6689 34.2265C32.7361 37.9837 26.4099 35.952 24.3589 35.4427L26.0214 28.784C28.0724 29.2967 34.6471 30.31 33.6689 34.2265ZM34.6051 24.4808C33.7529 27.8985 28.4889 26.1607 26.7826 25.7355L28.2876 19.698C29.9939 20.1232 35.4941 20.916 34.6051 24.4808Z" fill="white"></path>
-                            </svg>
-                            <div class="connectWalletToDex_step6_network-name">BTC</div>
+                            <div class="connectWalletToDex_step5_btc-ico">
+                              <img src="https://cdn.prod.website-files.com/68f62d7ec4ced98ccbd356d8/6a637ef7ffa7bae7f5fc9289_solana.webp">
+                            </div>
+                            <div class="connectWalletToDex_step6_network-name">SOL</div>
                           </div>
                           <div class="connectWalletToDex_step6_balance-container">
-                            <div class="connectWalletToDex_step6_network-name">0.012019 BTC</div>
+                            <div class="connectWalletToDex_step6_network-name">0.37 SOL</div>
                           </div>
                           <div class="connectWalletToDex_step6_logoutbtn">
                             <svg xmlns="http://www.w3.org/2000/svg" class="connectWalletToDex_step6_logoutbtn_ico" width="20" height="20" fill="none"><path fill="currentColor" d="m8.508 5.175.658-.667v3.825a.833.833 0 0 0 1.667 0V4.508l.658.667a.833.833 0 0 0 1.183 0 .833.833 0 0 0 0-1.183l-2.083-2.084a.8.8 0 0 0-.275-.175.83.83 0 0 0-.633 0 .8.8 0 0 0-.275.175L7.324 3.992a.837.837 0 0 0 1.184 1.183M14.999 6.3a.848.848 0 1 0-1.2 1.2 5.375 5.375 0 1 1-7.6 0A.848.848 0 1 0 5 6.3a7.05 7.05 0 1 0 10 0"/></svg>
