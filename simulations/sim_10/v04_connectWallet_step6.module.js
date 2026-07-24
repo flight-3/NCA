@@ -430,6 +430,7 @@ export default {
   align-items: center;
   padding: 8px 12px;
   display: flex;
+  position: relative;
 }
 
 .connectWalletToDex_step6_logoutbtn:before {
