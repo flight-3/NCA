@@ -503,7 +503,13 @@ export default {
   height: 16px;
 }
 
-.connectWalletToDex_step5_add-ico, .connectWalletToDex_step5_btc-ico {
+.connectWalletToDex_step5_btc-ico {
+display: flex;
+width: 20px;
+height: 20px;
+}
+
+.connectWalletToDex_step5_add-ico {
   flex: none;
   width: 20px;
   height: 20px;
