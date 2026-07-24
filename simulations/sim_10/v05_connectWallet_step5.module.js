@@ -414,7 +414,7 @@ export default {
   flex: 0 auto;
   justify-content: center;
   align-items: center;
-  width: 70px;
+  min-width: 70px;
   padding: 8px 12px;
   display: flex;
 }
