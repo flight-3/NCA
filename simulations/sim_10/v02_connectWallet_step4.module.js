@@ -753,11 +753,11 @@ export default {
                     </div>
                     <div class="connectWalletToDex_step4_wallet-details">
                       <div class="connectWalletToDex_step4_wallet-name">Wallet 1</div>
-                      <div class="connectWalletToDex_step4_wallet-address">bc1qxy...9a0f</div>
+                      <div class="connectWalletToDex_step4_wallet-address">7xKp...9QmR</div>
                     </div>
                   </div>
                   <div class="connectWalletToDex_step4_wallet-balance">
-                    <div class="connectWalletToDex_step4_balance-amount">0.0250 BTC</div>
+                    <div class="connectWalletToDex_step4_balance-amount">2.84 SOL</div>
                     <div class="connectWalletToDex_step4_balance-details">
                       <div class="connectWalletToDex_step4_balance-icons">
                         <div class="connectWalletToDex_step4_balance-icon is--1"></div>
@@ -797,7 +797,7 @@ export default {
                       </div>
                       <div class="connectWalletToDex_step4_wallet-details">
                         <div class="connectWalletToDex_step4_wallet-name">Wallet 1</div>
-                        <div class="connectWalletToDex_step4_wallet-network">Bitcoin Mainnet</div>
+                        <div class="connectWalletToDex_step4_wallet-network">Solana</div>
                       </div>
                     </div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="100%" viewBox="0 0 24 24" fill="none" class="connectWalletToDex_step4_wallet-arrow">
